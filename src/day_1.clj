@@ -16,7 +16,8 @@
 (comment
   ;; slurp -> IO
   ;; IO 는 부수효과(side-effect)라고 합니다.
-  (->> (parse (slurp "./src/day_1_input"))
+  (->> (slurp "./src/day_1_input")
+       (parse)
        (sum)))
 
 (defn find_the_first_duplicate
@@ -33,6 +34,7 @@
 ;
 ;예) +3, +3, +4, -2, -4 는 10이 처음으로 두번 나오는 숫자임. 0 -> 3 (+3) -> 6 (+3) -> 10(+4) -> 8(-2) -> 4(-4) -> 7(+3) -> 10(+3) -> ...
 (comment
-  (->> (parse (slurp "./src/day_1_input"))
+  (->> (slurp "./src/day_1_input")
+       (parse)
        (cycle)
        (find_the_first_duplicate)))
