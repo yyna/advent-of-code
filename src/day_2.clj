@@ -1,4 +1,5 @@
-(ns day_2 (:require [clojure.java.io :as io]))
+(ns day_2
+  (:require [clojure.java.io :as io]))
 
 (defn parse [input]
   "multiline string input 을 string sequence 로 변경해 return 하는 function"
@@ -25,32 +26,35 @@
        (apply *)))
 
 (comment
+  (last (diff (seq "abcd") (seq "abed")))
   (solve-part-1 input))
 
 ;[part 2]
 ;여러개의 문자열 중, 같은 위치에 정확히 하나의 문자가 다른 문자열 쌍에서 같은 부분만을 리턴하시오.
 
 (defn get-common-letters [a b]
-  "string a, b 를 input 으로 받아 공통된 문자열을 return 하는 function"
-  (->> (map vector a b)
-       (reduce (fn [s [x y]] (if (= x y) (str s x) s)) "")))
+  "string a, b 를 input 으로 받아 공통된 문자열을 return 하는 function
+   ex) [abcd, abcf] -> abc"
+  (time (->> (map vector a b)
+             (reduce (fn [s [x y]] (if (= x y) (str s x) s)) ""))))
 
-(defn print-diff [list]
-  "string sequence 를 input 으로 받아 모든 조합 중 1개의 알파벳만 다른 경우의 공통된 문자열을 print 하는 function"
-  (loop [x list]
-    (loop [y (rest x)]
-      (when (seq y)
-        (let [a (first x)
-              b (first y)
-              common-letters (get-common-letters a b)]
-          (when (= (- (count a) 1) (count common-letters))
-            (println common-letters))
-          (recur (rest y)))))
-    (when (seq x)
-      (recur (rest x)))))
+  ;(time (->> (clojure.data/diff (seq a) (seq b))
+  ;           last
+  ;           clojure.string/join)))
+
+(defn get-diff [list]
+  "string sequence 를 input 으로 받아 모든 조합 중 1개의 알파벳만 다른 경우의 공통된 문자열을 return 하는 function"
+  (->> (for [x (range (count list))
+             y (range (count list))
+             :when (< x y)]
+         (let [a (nth list x)
+               b (nth list y)]
+           (get-common-letters a b)))
+       (filter #(= (+ (count %) 1) (count (first list))))
+       first))
 
 (defn solve-part-2 [input]
-  (print-diff input))
+  (get-diff input))
 
 (comment
   (solve-part-2 input))
