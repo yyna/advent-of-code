@@ -1,14 +1,18 @@
-(ns day_3)
+(ns day_3 (:require [clojure.java.io :as io]))
 
 (defn parse [input]
   "multiline string input 을 string sequence 로 변경해 return 하는 function"
-  (clojure.string/split-lines input))
+  (->> input
+       clojure.string/split-lines))
 
-;read input
-(def input (->> (slurp "./src/day_3_input")
-                (parse)))
+(def input (->> "day_3_input"
+                io/resource
+                slurp
+                parse))
 
-(count input)
+(println input)
+
+;; (1 2 3 4)
 
 ;[part 1]
 ;다음과 같은 입력이 주어짐.
