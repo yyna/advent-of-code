@@ -38,6 +38,7 @@
   (time (->> (map vector a b)
              (reduce (fn [s [x y]] (if (= x y) (str s x) s)) ""))))
 
+  ;⁉️ diff 너무 느림
   ;(time (->> (clojure.data/diff (seq a) (seq b))
   ;           last
   ;           clojure.string/join)))
