@@ -3,16 +3,41 @@
 (defn parse [input]
   "multiline string input 을 string sequence 로 변경해 return 하는 function"
   (->> input
-       clojure.string/split-lines))
+       clojure.string/split-lines
+       (map
+         (fn [string]
+           (let [[_ id x y w h] (re-find (re-matcher #"#(\d+) @ (\d+),(\d+): (\d+)x(\d+)" string))]
+             {:id (Integer/parseInt id)
+              :x (Integer/parseInt x)
+              :y (Integer/parseInt y)
+              :w (Integer/parseInt w)
+              :h (Integer/parseInt h)})))))
+;; ({:id 1 :x 1 :y 3 :w 4 :h 4}
+;;  {:id 2 :x 3 :y 1 :w 4 :h 4}
+;;  {:id 3 :x 5 :y 5 :w 2 :h 2})
 
 (def input (->> "day_3_input"
                 io/resource
                 slurp
                 parse))
 
-(println input)
+(defn generate-list [{x :x y :y w :w h :h}]
+  "(x,y) 좌표의 너비 w 높이 h 인 면적에 속하는 좌표의 list 를 return 하는 function"
+  (->> (for [a (range x (+ x w)) b (range y (+ y h))]
+         (str a "-" b))
+       (into '())))
 
-;; (1 2 3 4)
+(defn solve-part-1 [input]
+  (->> input
+       (map generate-list)
+       (apply concat)
+       frequencies
+       vals
+       (filter #(> % 1))
+       count))
+
+(comment
+  (solve-part-1 input))
 
 ;[part 1]
 ;다음과 같은 입력이 주어짐.
