@@ -1,11 +1,11 @@
-(ns day_2
+(ns aoc2018.day_2
   (:require [clojure.java.io :as io]))
 
 (defn parse [input]
   "multiline string input 을 string sequence 로 변경해 return 하는 function"
   (clojure.string/split-lines input))
 
-(def input (->> "day_2_input"
+(def input (->> "aoc2018/day_2_input"
                 io/resource
                 slurp
                 parse))

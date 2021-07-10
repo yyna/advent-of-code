@@ -1,4 +1,4 @@
-(ns day_4 (:require [clojure.java.io :as io]))
+(ns aoc2018.day_4 (:require [clojure.java.io :as io]))
 (import java.text.SimpleDateFormat)
 ;; java-time
 ;; java 없이 해보기
@@ -19,7 +19,7 @@
        (reduce generate-sleep-await-map [{} 0])
        first))
 
-(def input (->> "day_4_input"
+(def input (->> "aoc2018/day_4_input"
                 io/resource
                 slurp
                 parse))
