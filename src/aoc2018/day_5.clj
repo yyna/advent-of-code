@@ -14,6 +14,7 @@
        (filter #(not (nil? %)))
        first))
 
+;; 리팩터링 - stack 을 써보자 joc 5장 peek pop
 (defn react [v]
   (let [react-index (find-first-react-index v)]
     (if (and (not (nil? react-index)) (> react-index 0))

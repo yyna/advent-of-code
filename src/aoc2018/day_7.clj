@@ -29,42 +29,53 @@
 ;; "Q" {:from ["S" "D" "Y" "I"], :to ["E" "T" "B" "Z"]},
 ;; ...}
 
-(defn remove-vertex-from [graph vertex]
+(defn remove-vertex [graph vertex]
   "input graph 에서 input vertex 가 제거된 graph 를 return 하는 function"
-  (def new-graph (->> (vec ((graph vertex) :to))
+  (def new-graph (->> (vec ((graph vertex) :to)) ; let 이름 이상함
                       (reduce (fn [g x]
                                 (assoc-in g [x :from] (disj ((get g x) :from) vertex)))
                               graph)))
   (dissoc new-graph vertex))
 
-(defn find-start-vertex [graph]
-  "input graph 의 첫번째 vertex 를 찾아 return 하는 function"
+(defn remove-vertices [graph vertices]
+  (reduce (fn [g x] (remove-vertex g x)) graph vertices))
+
+(defn find-available-vertex [graph maximum]
+  "input graph 의 수행 가능한 n 개의 vertex 를 찾아 return 하는 function"
   (->> graph
        (filter (fn [[k v]] (= 0 (count (v :from)))))
        keys
        sort
-       first))
+       (take maximum)))
 
-(defn remove-start-vertex [graph]
-  (let [start (find-start-vertex graph)]
-    {:vertex start :graph (remove-vertex-from graph start)}))
+(defn remove-available-vertices [graph maximum]
+  (let [vertices (find-available-vertex graph maximum)]
+    {:vertices vertices :graph (remove-vertices graph vertices)}))
 
 (defn solve-part-1 [graph]
-  (->> (loop [g graph order ""]
-         (let [{vertex :vertex graph :graph} (remove-start-vertex g)]
-           (if (> (count graph) 0)
-             (recur graph (str order vertex))
-             (str order vertex))))))
+  (loop [g graph order []]
+    (let [{[vertex] :vertices graph :graph} (remove-available-vertices g 1)]
+      (if (> (count graph) 0)
+        (recur graph (conj order vertex))
+        (apply str (conj order vertex))))))
+
+;; 2020년 8번이 좀 더 순한 맛
+
+(defn solve-part-2 [graph])
 
 (comment
   (->> input
        build-graph
        solve-part-1))
 
-(defn char-to-seconds [char]
-  (- (int char) 4))
+(defn to-seconds [str]
+  (- (int (first (seq str))) 4))
 
-;;[part 2]
 (comment
-  (println (seq "CGKMUWXFAIHSYDNLJQTREOPZBV"))
-  (println (map char-to-seconds (seq "CGKMUWXFAIHSYDNLJQTREOPZBV"))))
+  (def graph (->> input
+                  build-graph))
+
+  (loop [g graph worker [0 0 0 0 0]]
+    (let [{vertices :vertices graph :graph} (remove-available-vertices (build-graph input) 5)]
+      (println vertices)
+      (println (map to-seconds vertices)))))

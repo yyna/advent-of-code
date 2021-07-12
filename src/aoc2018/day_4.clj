@@ -46,8 +46,10 @@
             60000)]
     (map #(mod % 60) (range start-min (+ start-min diff)))))
 
+; split 한번에 하기
+
 (defn generate-sleep-min-map [minute-map [guard-id sleeps]]
-  (->> (partition 2 sleeps)
+  (->> (partition 2 sleeps) ; 설명 부족
        (map get-asleep-mins)
        (apply concat)
        (assoc minute-map guard-id)))
@@ -74,14 +76,21 @@
 (defn solve-part-2 [input]
   (->> input
        (reduce generate-sleep-min-map {})
-       (filter (fn [[_ asleep-mins]] (> (count asleep-mins) 0)))
+       (filter (fn [[_ asleep-mins]] (> (count asleep-mins) 0))) ; filter 빼기
        (map (fn [[guard-id asleep-mins]]
               (let [[minute frequency] (get-most-frequent asleep-mins)]
-                {:guard-id guard-id :minute minute :frequency frequency})))
+                {:guard-id guard-id :minute minute :frequency frequency}))) ; count
        (sort-by :frequency)
-       last
+       last ; 하나의 함수로
        ((juxt :guard-id :minute))
        (apply *)))
 
 (comment
   (solve-part-2 input))
+
+;; 리팩터링 - 자료 구조
+
+
+
+
+
