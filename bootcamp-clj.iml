@@ -10,7 +10,10 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Deps: org.clojure/clojure:1.10.3" level="project" />
+    <orderEntry type="library" name="Deps: clojure.java-time:0.3.2" level="project" />
+    <orderEntry type="library" name="Deps: org.clojure/math.combinatorics:0.1.6" level="project" />
     <orderEntry type="library" name="Deps: org.clojure/spec.alpha:0.2.194" level="project" />
     <orderEntry type="library" name="Deps: org.clojure/core.specs.alpha:0.2.56" level="project" />
+    <orderEntry type="library" name="Deps: clj-tuple:0.2.2" level="project" />
   </component>
 </module>
