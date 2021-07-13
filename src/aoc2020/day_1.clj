@@ -1,6 +1,6 @@
 (ns aoc2020.day_1
-  (:require [clojure.java.io :as io])
-  (:require [clojure.math.combinatorics :as combo]))
+  (:require [clojure.java.io :as io]
+            [clojure.math.combinatorics :as combo]))
 
 (defn parse [input]
   "multiline string input 을 정수 sequence 로 변경해 return 하는 function"

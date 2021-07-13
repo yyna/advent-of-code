@@ -31,7 +31,7 @@
   "num 이 a 와 b 사이의 값인지 판별하는 function"
   (and (>= num a) (<= num b)))
 
-(s/def ::byr #(between 1920 2002 %))
+(s/def ::byr #( 1920 2002 %))
 (s/def ::iyr #(between 2010 2020 %))
 (s/def ::eyr #(between 2020 2030 %))
 (s/def ::hgt (fn [{v :value u :unit}]
@@ -40,7 +40,7 @@
                  (and (= u "in") (between 59 76 v)))))
 (s/def ::hcl #(re-matches #"#[0-9a-f]{6}" %))
 (s/def ::ecl #(re-matches #"(amb|blu|brn|gry|grn|hzl|oth)" %))
-(s/def ::pid #(re-matches #"0[\d]{8}" %))
+(s/def ::pid #(re-matches #"\d{9}" %))
 (s/def ::cid int?)
 (s/def ::passport (s/keys :req [::iyr ::eyr ::hgt ::hcl ::ecl ::pid]
                           :opt [::cid]))
@@ -51,7 +51,6 @@
          #{:ecl :byr :iyr :hgt :pid :hcl :eyr}
          (set (keys passport)))
        empty?))
-
 (defn is-valid-passport [passport]
   (if (has-all-required-keys passport)
     (let [{iyr :iyr eyr :eyr hgt :hgt hcl :hcl ecl :ecl pid :pid cid :cid} passport]
@@ -76,3 +75,5 @@
   (solve-part-1 input))
 
 ;;[part 2]
+
+;;required option

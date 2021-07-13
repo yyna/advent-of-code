@@ -9,3 +9,6 @@
                 io/resource
                 slurp
                 parse))
+
+
+;; loop recur reduce 없이
