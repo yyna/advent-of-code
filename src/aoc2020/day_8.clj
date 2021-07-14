@@ -22,7 +22,7 @@
 ; ...)
 
 ;(def input (->> "nop +0\nacc +1\njmp +4\nacc +3\njmp -3\nacc -99\nacc +1\nnop -4\nacc +6"
-;                parse})
+;                parse))
 
 (defn accumulate [input]
   "input 된 list 를 한번 accumulate 한 후 결과를 return 하는 function"
@@ -34,12 +34,12 @@
 
 (defn infinite? [input]
   "현재 list 의 상태가 infinite 인지 확인 하는 function, 확인할 수 없으면 nil 이 return 됨"
-  (let [list (input :list)
+  (let [[list index] ((juxt :list :index) input)
         [operator visit] ((juxt :operator :visit) (last list))
-        multiple-visit (count (filter #(> (% :visit) 1) list))]
+        duplicate-visit (count (filter #(> (% :visit) 1) list))]
     (cond
-      (and (not= operator "jmp") (= visit 1)) false
-      (> multiple-visit 0) true)))
+      (and (= index 0) (not= operator "jmp") (= visit 1)) false
+      (> duplicate-visit 0) true)))
 
 (defn get-last-value [input]
   "infinite 인지 확인된 상태에서의 accumulator value 및 infinite 여부를 return 하는 function"
@@ -71,14 +71,10 @@
 (defn solve-part-2 [input]
   (->> input
        generate-all-cases
+       (map get-last-value)
        (filter #(= false (% :infinite?)))
        last
        :next-value))
 
 (comment
-  (println input)
-  (->> input
-       generate-all-cases
-       (map get-last-value))
-
   (solve-part-2 input))
