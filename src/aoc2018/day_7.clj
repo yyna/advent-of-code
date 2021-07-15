@@ -59,23 +59,9 @@
         (recur graph (conj order vertex))
         (apply str (conj order vertex))))))
 
-;; 2020년 8번이 좀 더 순한 맛
-
-(defn solve-part-2 [graph])
-
 (comment
   (->> input
        build-graph
        solve-part-1))
 
-(defn to-seconds [str]
-  (- (int (first (seq str))) 4))
-
-(comment
-  (def graph (->> input
-                  build-graph))
-
-  (loop [g graph worker [0 0 0 0 0]]
-    (let [{vertices :vertices graph :graph} (remove-available-vertices (build-graph input) 5)]
-      (println vertices)
-      (println (map to-seconds vertices)))))
+;;[part 2]

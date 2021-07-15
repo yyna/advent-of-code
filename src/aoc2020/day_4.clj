@@ -21,7 +21,7 @@
                    m
                    (keyword k)
                    (cond
-                     (or (= k "iyr") (= k "byr") (= k "eyr") (= k "cid")) (Integer/parseInt v)
+                     (#{"iyr" "byr" "eyr" "cid"} k) (Integer/parseInt v)
                      (= k "hgt") (let [[value unit] (rest (re-find (re-matcher #"([\d]+)?([a-z]+)?" v)))]
                                    {:value (Integer/parseInt value) :unit unit})
                      :else v)))
@@ -51,6 +51,9 @@
 (defn valid-passport? [passport]
   "valid 한 passport 인지 확인해 boolean 을 return 하는 function"
   (s/valid? ::passport passport))
+
+;; s/conform -> 맞는 passport일 경우 passport 자체가 반환, 아니면 에러 메시지 -> coercion
+;; valid /conform 을 coercion 용도로 사용하지 마라!
 
 ;;[part 1]
 ;; 주어진 입력에서 '유효한' 여권의 숫자를 반환하여라.
