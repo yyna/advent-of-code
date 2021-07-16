@@ -1,4 +1,5 @@
-(ns aoc2018.day-7 (:require [clojure.java.io :as io]))
+(ns aoc2018.day-7
+  (:require [clojure.java.io :as io]))
 
 (defn parse [input]
   "multiline string input 을 string sequence 로 변경해 return 하는 function"
@@ -68,6 +69,8 @@
        build-graph
        solve-part-1))
 
+;; filter filterv
+
 ;;[part 2]
 (defn assign [status works]
   "현재 status 를 확인하여 works 를 assign 하는 함수
@@ -87,6 +90,8 @@
                   :else (conj v (first available-works)))))
             wip status)))
 
+;; docstring 은 파라미터 전에 쓰자
+
 (defn in-1-second [graph status]
   "1초 후의 그래프와 status 를 생성하는 function"
   (let [new-status-with-zero (->> status
@@ -102,25 +107,26 @@
         new-status (->> new-status-with-zero
                         (reduce (fn [s x]
                                   (conj s
-                                    (if (or (empty? x) (= (second x) 0))
-                                      []
-                                      x)))
+                                        (if (or (empty? x) (= (second x) 0))
+                                          []
+                                          x)))
                                 []))]
-      {:graph new-graph
-       :status new-status}))
+    {:graph  new-graph
+     :status new-status}))
 
 (defn work [input]
   (let [{:keys [graph status]} (in-1-second (:graph input) (:status input))]
-    {:graph graph
-     :status (assign status (find-available-vertex graph (count status)))
+    {:graph        graph
+     :status       (assign status (find-available-vertex graph (count status)))
      :time-elapsed (inc (:time-elapsed input))}))
 
+; work 로 part 1 도 풀어보자
+
 (defn solve-part-2 [graph]
-  (->> (take-while
-         #(seq (% :graph))
-         (iterate work {:graph graph
-                        :status [[] [] [] [] []]
-                        :time-elapsed 0}))
+  (->> (iterate work {:graph        graph
+                      :status       [[] [] [] [] []]
+                      :time-elapsed 0})
+       (take-while #(seq (% :graph)))
        last
        :time-elapsed))
 

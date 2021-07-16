@@ -15,11 +15,20 @@
        first))
 
 ;; 리팩터링 - stack 을 써보자 joc 5장 peek pop
+;(defn react [v]
+;  (let [react-index (find-first-react-index v)]
+;    (if (and (not (nil? react-index)) (> react-index 0))
+;      (recur (into (subvec v 0 react-index) (subvec v (+ react-index 2) (count v))))
+;      v)))
+
 (defn react [v]
-  (let [react-index (find-first-react-index v)]
-    (if (and (not (nil? react-index)) (> react-index 0))
-      (recur (into (subvec v 0 react-index) (subvec v (+ react-index 2) (count v))))
-      v)))
+  (->> v
+       (reduce (fn [stack v]
+                 (let [peek (last stack)]
+                   (if (check peek v)
+                     (disj stack)
+                     (conj stack v))))
+               [])))
 
 ;;[part 1]
 ;;입력: dabAcCaCBAcCcaDA 같은 종류의 소문자와 대문자는 서로 ‘반응‘하여 사라짐. aABb -> ‘’ 사라진 자리는 진공이 되기 때문에 다른 문자들이 붙게 되고, 또 그 문자들끼리 반응할 수 있음. abBA-> aA -> ‘’ 바로 옆에 붙어있어야만 서로 반응함. abAB -> abAB (반응 없음) 대문자-대문자, 소문자-소문자는 서로 반응하지 않음. aabAAB-> aabAAB (반응 없음) 예시 dabAcCaCBAcCcaDA => dabCBAcaDA 주어진 input 에서 최종으로 남는 문자열을 리턴하시오.
@@ -29,7 +38,7 @@
        count))
 
 (comment
-  (solve-part-1 input))
+  (solve-part-1 "dabAcCaCBAcCcaDA"))
 
 (defn get-all-unit-types [input]
   (->> input
