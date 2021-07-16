@@ -47,12 +47,6 @@
                  (assoc-in g [x :from] (disj ((get g x) :from) id)))
                (dissoc graph id))))
 
-(defn remove-vertices [graph vertices]
-  (->> vertices
-       (reduce (fn [g x]
-                 (remove-vertex-by-id g (first x)))
-               graph)))
-
 (defn find-available-vertex [graph max]
   "input graph 의 수행 가능한 n 개의 vertex 를 찾아 return 하는 function"
   (->> graph
@@ -61,16 +55,13 @@
        (take max)
        (mapv #((juxt :id :time) (val %)))))
 
-(defn remove-available-vertices [graph n]
-  (let [vertices (find-available-vertex graph n)]
-    {:vertices vertices :graph (remove-vertices graph vertices)}))
-
 (defn solve-part-1 [graph]
-  (loop [g graph order []]
-    (let [{[vertex] :vertices graph :graph} (remove-available-vertices g 1)]
-      (if (> (count graph) 0)
-        (recur graph (conj order (first vertex)))
-        (apply str (conj order (first vertex)))))))
+  (->> graph
+       (reduce (fn [[g s] _]
+                 (let [[[id]] (find-available-vertex g 1)]
+                   [(remove-vertex-by-id g id) (str s id)]))
+               [graph ""])
+       second))
 
 (comment
   (->> input
@@ -97,6 +88,7 @@
             wip status)))
 
 (defn in-1-second [graph status]
+  "1초 후의 그래프와 status 를 생성하는 function"
   (let [new-status-with-zero (->> status
                                   (mapv (fn [x]
                                           (if-let [[id left] (seq x)]
@@ -117,20 +109,22 @@
       {:graph new-graph
        :status new-status}))
 
-(defn work [{:keys [time-elapsed] :as all}]
-  (let [{:keys [graph status]} (in-1-second (:graph all) (:status all))]
+(defn work [input]
+  (let [{:keys [graph status]} (in-1-second (:graph input) (:status input))]
     {:graph graph
      :status (assign status (find-available-vertex graph (count status)))
-     :time-elapsed (inc time-elapsed)}))
+     :time-elapsed (inc (:time-elapsed input))}))
 
-(defn solve-part-2 [input]
+(defn solve-part-2 [graph]
   (->> (take-while
          #(seq (% :graph))
-         (iterate work {:graph (build-graph input)
+         (iterate work {:graph graph
                         :status [[] [] [] [] []]
                         :time-elapsed 0}))
        last
        :time-elapsed))
 
 (comment
-  (solve-part-2 input))
+  (->> input
+       build-graph
+       solve-part-2))
