@@ -1,6 +1,7 @@
 (ns aoc2018.day_2
   (:require [clojure.java.io :as io]
-            [clojure.string :as str]))
+            [clojure.string :as str]
+            [clojure.data :as data]))
 
 (defn parse [input]
   "multiline string input 을 string sequence 로 변경해 return 하는 function"
@@ -27,7 +28,6 @@
        (apply *)))
 
 (comment
-  (last (diff (seq "abcd") (seq "abed")))
   (solve-part-1 input))
 
 ;[part 2]
@@ -36,13 +36,9 @@
 (defn get-common-letters [a b]
   "string a, b 를 input 으로 받아 공통된 문자열을 return 하는 function
    ex) [abcd, abcf] -> abc"
-  (time (->> (map vector a b)
-             (reduce (fn [s [x y]] (if (= x y) (str s x) s)) ""))))
-
-  ;⁉️ diff 너무 느림 - 알아보자
-  ;(time (->> (clojure.data/diff (seq a) (seq b))
-  ;           last
-  ;           clojure.string/join)))
+  (->> (data/diff (seq a) (seq b))
+       last
+       str/join))
 
 (defn get-diff [list]
   "string sequence 를 input 으로 받아 모든 조합 중 1개의 알파벳만 다른 경우의 공통된 문자열을 return 하는 function"
