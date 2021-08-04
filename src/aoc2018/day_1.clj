@@ -1,7 +1,8 @@
 (ns aoc2018.day_1 (:require [clojure.java.io :as io]))
 
-(defn parse [input]
+(defn parse
   "multiline string input 을 정수 sequence 로 변경해 return 하는 function"
+  [input]
   (->> (clojure.string/split-lines input)
        (map #(Integer/parseInt %))))
 
