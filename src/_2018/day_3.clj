@@ -1,4 +1,4 @@
-(ns aoc2018.day_3
+(ns _2018.day_3
   (:require [clojure.java.io :as io]
             [clojure.set :as set]
             [clojure.string :as str]))
@@ -46,7 +46,7 @@
 ;;  [3 4] #{2 1}
 ;;  ... }
 
-(def input (->> "aoc2018/day_3_input"
+(def input (->> "2018/day_3_input"
                 io/resource
                 slurp
                 parse))

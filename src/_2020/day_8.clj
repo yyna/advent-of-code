@@ -1,4 +1,4 @@
-(ns aoc2020.day_8
+(ns _2020.day_8
   (:require [clojure.java.io :as io]
             [clojure.string :as str]))
 
@@ -10,7 +10,7 @@
                  {:operator operator
                   :operand (Integer/parseInt operand)})))))
 
-(def input (->> "aoc2020/day_8_input"
+(def input (->> "2020/day_8_input"
                 io/resource
                 slurp
                 parse))

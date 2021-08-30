@@ -1,4 +1,4 @@
-(ns aoc2020.day_1
+(ns _2020.day_1
   (:require [clojure.java.io :as io]
             [clojure.math.combinatorics :as combo]))
 
@@ -7,7 +7,7 @@
   (->> (clojure.string/split-lines input)
        (map #(Integer/parseInt %))))
 
-(def input (->> "aoc2020/day_1_input"
+(def input (->> "2020/day_1_input"
                 io/resource
                 slurp
                 parse))

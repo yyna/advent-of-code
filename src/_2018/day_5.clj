@@ -1,6 +1,6 @@
-(ns aoc2018.day_5 (:require [clojure.java.io :as io]))
+(ns _2018.day_5 (:require [clojure.java.io :as io]))
 
-(def input (->> "aoc2018/day_5_input"
+(def input (->> "2018/day_5_input"
                 io/resource
                 slurp))
 

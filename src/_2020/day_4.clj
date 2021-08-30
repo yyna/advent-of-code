@@ -1,4 +1,4 @@
-(ns aoc2020.day_4
+(ns _2020.day_4
   (:require [clojure.java.io :as io]
             [clojure.spec.alpha :as s]))
 
@@ -6,7 +6,7 @@
   "multiline string input 을 정수 sequence 로 변경해 return 하는 function"
   (->> (clojure.string/split input #"\n\n")))
 
-(def input (->> "aoc2020/day_4_input"
+(def input (->> "2020/day_4_input"
                 io/resource
                 slurp
                 parse))

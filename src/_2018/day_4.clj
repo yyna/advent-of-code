@@ -1,4 +1,4 @@
-(ns aoc2018.day_4 (:require [clojure.java.io :as io]))
+(ns _2018.day_4 (:require [clojure.java.io :as io]))
 
 (defn generate-sleep-await-map [[asleep-map last-guard-id] x]
   ""
@@ -19,7 +19,7 @@
        (reduce generate-sleep-await-map [{} 0])
        first))
 
-(def input (->> "aoc2018/day_4_input"
+(def input (->> "2018/day_4_input"
                 io/resource
                 slurp
                 parse))

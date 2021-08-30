@@ -1,4 +1,4 @@
-(ns aoc2018.day_2
+(ns _2018.day_2
   (:require [clojure.java.io :as io]
             [clojure.string :as str]
             [clojure.data :as data]))
@@ -8,7 +8,7 @@
   [input]
   (str/split-lines input))
 
-(def input (->> "aoc2018/day_2_input"
+(def input (->> "2018/day_2_input"
                 io/resource
                 slurp
                 parse))

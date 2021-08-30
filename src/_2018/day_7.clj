@@ -1,4 +1,4 @@
-(ns aoc2018.day-7
+(ns _2018.day-7
   (:require [clojure.java.io :as io]))
 
 (defn parse [input]
@@ -11,7 +11,7 @@
              [(first a) (first b)])))))
 ;;[[G W] [X S] [F V] [C Y] [M J] [K Z] [U W] [I H] [W B] [A Y] [Y D] [S Q] [N V] [H D] [D Q] [L E] [Q E] [T R] [J P] [R E] [E V] [O P] [P B] [Z V] [B V] [Y B] [C B] [Q T] [W P] [X Z] [L T] [G Y] [Y R] [E B] [X E] [Y V] [H L] [L J] [S T] [F T] [Y J] [A H] [P Z] [R O] [X F] [I O] [Y Q] [S D] [Q B] [C D] [Y N] [O Z] [G D] [A O] [U N] [Y P] [E O] [I Q] [W O] [D B] [Z B] [L B] [P V] [C E] [S O] [U T] [U O] [Y L] [N L] [Q Z] [U L] [U D] [J O] [L R] [S P] [H R] [F I] [D T] [C M] [W D] [R V] [U S] [K R] [D V] [D R] [I E] [L O] [T Z] [A E] [D Z] [H V] [A L] [W R] [F A] [Y Z] [I P] [F J] [H B] [G Z] [C K] [D E]]
 
-(def input (->> "aoc2018/day_7_input"
+(def input (->> "2018/day_7_input"
                 io/resource
                 slurp
                 parse))
