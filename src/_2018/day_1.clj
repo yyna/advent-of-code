@@ -23,22 +23,41 @@
 (comment
   (solve-part-1 input))
 
+;; loop 로 part 2 풀기
+(loop [input (cycle input)
+       sum 0
+       sum-set #{}]
+  (let [sum (+ sum (first input))]
+    (if (sum-set sum)
+      (println sum)
+      (recur (next input) sum (conj sum-set sum)))))
+
+;; reduced 로 part 2 풀기
+(reduce
+  (fn [{:keys [sum sum-set]} x]
+    (let [sum (+ sum x)]
+      (if (sum-set sum)
+        (reduced sum)
+        {:sum sum :sum-set (conj sum-set sum)})))
+  {:sum 0 :sum-set #{}} (cycle input))
+
+;; iterate 로 part 2 풀기
 (defn add
-  [{:keys [list sum current-set]}]
-  (let [current-sum (+ sum (first list))]
-    {:list (next list)
-     :sum current-sum
-     :current-set (conj current-set current-sum)
-     :duplicated? (contains? current-set current-sum)}))
+  [{:keys [input sum sum-set]}]
+  (let [sum (+ sum (first input))]
+    {:input (next input)
+     :sum sum
+     :sum-set (conj sum-set sum)
+     :no-duplicate? (nil? (sum-set sum))}))
 
 ;;[part 2]
 ;;주어진 입력의 숫자를 더할 때 마다 나오는 숫자 중, 처음으로 두번 나오는 숫자를 리턴하시오.
 ;;
 ;;예) +3, +3, +4, -2, -4 는 10이 처음으로 두번 나오는 숫자임. 0 -> 3 (+3) -> 6 (+3) -> 10(+4) -> 8(-2) -> 4(-4) -> 7(+3) -> 10(+3) -> ...
 (defn solve-part-2 [input]
-  (->> {:list (cycle input) :sum 0 :current-set #{} :duplicated? false}
+  (->> {:input (cycle input) :sum 0 :sum-set #{} :no-duplicate? true}
        (iterate add)
-       (drop-while #(= false (:duplicated? %)))
+       (drop-while :no-duplicate?)
        first
        :sum))
 
