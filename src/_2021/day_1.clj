@@ -2,9 +2,12 @@
   (:require [clojure.java.io :as io]
             [clojure.string :as s]))
 
-(defn parse [input]
+(defn parse [path]
   "multiline string input 을 정수 sequence 로 변경해 return 하는 function"
-  (->> (s/split-lines input)
+  (->> path
+       io/resource
+       slurp
+       s/split-lines
        (map #(Integer/parseInt %))))
 
 (defn count-increase [input]
@@ -15,10 +18,7 @@
 
 (comment
 
-  (def input (->> "2021/day_1_input"
-                  io/resource
-                  slurp
-                  parse))
+  (def input (parse "2021/day_1_input"))
 
   ;;[part 1] How many measurements are larger than the previous measurement?
   (count-increase input)
