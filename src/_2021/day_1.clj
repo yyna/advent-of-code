@@ -3,7 +3,6 @@
             [clojure.string :as s]))
 
 (defn parse [path]
-  "multiline string input 을 정수 sequence 로 변경해 return 하는 function"
   (->> path
        io/resource
        slurp
