@@ -1,5 +1,6 @@
 (ns _2021.day_5
-  (:require [clojure.java.io :as io]))
+  (:require [clojure.java.io :as io]
+            [clojure.string :as s]))
 
 (defn parse [path]
   (->> path
