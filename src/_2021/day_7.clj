@@ -23,7 +23,7 @@
                  (apply + (for [position crabs-position]
                             (Math/abs (- number position)))))))
 
-  ;;[part 2]
+  ;;[part 2] How much fuel must they spend to align to that position?
   (let [min-value (apply min crabs-position)
         max-value (apply max crabs-position)]
       (apply min (for [number (range min-value (inc max-value))]
