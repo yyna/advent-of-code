@@ -70,7 +70,7 @@
   ;;[part 1] In the output values, how many times do digits 1, 4, 7, or 8 appear?
   (->> notes
        (map :output)
-       flatten
+       (apply concat)
        (filter (fn [out]
                  (let [length (count out)]
                    (or (= 2 length)
