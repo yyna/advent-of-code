@@ -35,16 +35,19 @@
   ([heightmap x y point-set]
    (let [value (get-in heightmap [x y])]
      (if-not (or (nil? value) (= 9 value))
-       (let [current-point-set (conj point-set [x y])]
-         (-> current-point-set
-             (set/union (when-not (contains? current-point-set [(dec x) y])
-                          (basin heightmap (dec x) y current-point-set)))
-             (set/union (when-not (contains? current-point-set [(inc x) y])
-                          (basin heightmap (inc x) y current-point-set)))
-             (set/union (when-not (contains? current-point-set [x (dec y)])
-                          (basin heightmap x (dec y) current-point-set)))
-             (set/union (when-not (contains? current-point-set [x (inc y)])
-                          (basin heightmap x (inc y) current-point-set)))))
+       (let [found-set (conj point-set [x y])
+             up-point-set (when-not (contains? found-set [(dec x) y])
+                            (basin heightmap (dec x) y found-set))
+             found-set (set/union found-set up-point-set)
+             down-point-set (when-not (contains? found-set [(inc x) y])
+                              (basin heightmap (inc x) y found-set))
+             found-set (set/union found-set down-point-set)
+             left-point-set (when-not (contains? found-set [x (dec y)])
+                              (basin heightmap x (dec y) found-set))
+             found-set (set/union found-set left-point-set)
+             right-point-set (when-not (contains? found-set [x (inc y)])
+                               (basin heightmap x (inc y) found-set))]
+         (set/union found-set right-point-set))
        point-set))))
 
 (comment
