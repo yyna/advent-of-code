@@ -174,3 +174,7 @@ Temporary Items
 advent-of-code.iml
 
 .idea/
+
+.lsp
+.clj-kondo
+.calva
