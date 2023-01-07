@@ -5,12 +5,8 @@ defmodule MyList do
     MapSet.intersection(m1, m2) |> MapSet.to_list |> List.to_string
   end
 
-  def get_compartments([a, b]) do
-    get_intersection(a, b)
-  end
-  def get_compartments([ head | tail ]) do
-    get_intersection(head, get_compartments(tail))
-  end
+  def get_compartments([a, b]) do: get_intersection(a, b)
+  def get_compartments([ head | tail ]) do: get_intersection(head, get_compartments(tail))
 end
 
 split_rucksacks = fn
