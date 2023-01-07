@@ -5,3 +5,6 @@
 clojure/.calva
 clojure/.cpcache
 clojure/.nrepl-port
+
+# elixir
+.elixir_ls
