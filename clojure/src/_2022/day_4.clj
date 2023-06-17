@@ -36,7 +36,7 @@
        (filter true?)
        (count))
 
-  ;; [part 2]
+  ;; [part 2] In how many assignment pairs do the ranges overlap?
   (->> (map overlapped? input)
        (filter true?)
        (count))
