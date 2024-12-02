@@ -25,12 +25,8 @@
        (apply +))
 
   ;; [part 2] Once again consider your left and right lists. What is their similarity score?
-  (->> (map (fn [number]
-              (* number
-                 (or (get (frequencies (map second input))
-                          number)
-                     0)))
-            (map first input))
+  (->> (map first input)
+       (map #(* % (or (get (frequencies (map second input)) %) 0)))
        (apply +))
 
   :rcf)
